@@ -1,0 +1,98 @@
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap" rel="stylesheet">
+        <style>
+            canvas {
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        }
+        </style>
+    </head>
+<body style="background-color: #FFE6BC;">
+    <h1 style="font-family: 'IBM Plex Mono', monospace; text-align: center;"><em>cubicle</em></h1>
+    <canvas width="300" , height="300"></canvas>
+</body>
+
+<script>
+    let canvas = document.querySelector('canvas')
+    let context = canvas.getContext('2d')
+    context.fillStyle = 'blue'
+    // ^This must go above the fillRect function in order for the shape to be blue
+    // context.fillRect(100, 100, 400, 400)
+    // ^This is saying go 100 pixels right, 100 pixels down,
+    // then draw a shape 400 pixels wide(to the right) and 400 pixels long(down)
+    // Btw the default fill color is black
+
+    context.lineWidth = 4
+    context.beginPath();
+    // This is saying you're starting a new path(shape)
+    context.rect(100, 100, 400, 400)
+    // context.stroke()
+
+    // DRAW A CIRCLE
+    context.beginPath();
+    context.arc(300, 300, 100, 0, Math.PI * 2);
+    // context.stroke()
+
+    const width = 60;
+    const height = 60
+    const gap = 20;
+    let x,y;
+    // USING LOOPS TO DRAW
+    function randomSquare() {
+        for(let i=0;i<5;i++) {
+        for (let j=0;j<5;j++) {
+            x = 0 + (width + gap) * i;
+            y = 0 + (height+gap) * j;
+
+
+            context.beginPath()
+            context.fillStyle = '#FFE6BC'
+            context.rect(x, y, width, height)
+            context.fill()
+
+            if (Math.random() > 0.5) {
+                // Adding interior rectangles
+                context.beginPath()
+                context.rect(x+8, y+8, width-16, height-16)
+                context.stroke()
+            }
+        }
+    }}
+    let rapidMove = setInterval(randomSquare, 300)
+
+
+
+document.querySelector('canvas').addEventListener('mouseover', function() {
+        clearInterval(rapidMove)
+        for(let i=0;i<5;i++) {
+        for (let j=0;j<5;j++) {
+            x = 0 + (width + gap) * i;
+            y = 0 + (height+gap) * j;
+
+
+            context.beginPath()
+            context.fillStyle = '#FFE6BC'
+            context.rect(x, y, width, height)
+            context.fill()
+
+            context.beginPath()
+            context.rect(x+8, y+8, width-16, height-16)
+            context.stroke()
+    }}})
+
+document.querySelector('canvas').addEventListener('mouseout', function() {
+    randomSquare()
+    rapidMove = setInterval(randomSquare, 300)
+})
+
+
+
+</script>
+
+</html>
